@@ -1,0 +1,158 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 CREATE TABLE ships (\
+    SH_id INT PRIMARY KEY,\
+    SH_name VARCHAR(100) NOT NULL,\
+    SH_port VARCHAR(100) NOT NULL,\
+    SH_discount DECIMAL(5,2) NOT NULL CHECK (SH_discount >= 0 AND SH_discount <= 100)\
+);\
+\
+CREATE TABLE places (\
+    PL_id INT PRIMARY KEY,\
+    PL_port VARCHAR(100) NOT NULL,\
+    PL_pier INT NOT NULL CHECK (PL_pier > 0),\
+    PL_charges DECIMAL(5,2) NOT NULL CHECK (PL_charges >= 0 AND PL_charges <= 100),\
+    UNIQUE (PL_port, PL_pier)\
+);\
+\
+CREATE TABLE cargo (\
+    C_id INT PRIMARY KEY,\
+    C_name VARCHAR(100) NOT NULL,\
+    C_port VARCHAR(100) NOT NULL,\
+    C_price DECIMAL(15,2) NOT NULL CHECK (C_price >= 0),\
+    C_maxnum INT NOT NULL CHECK (C_maxnum > 0)\
+);\
+\
+CREATE TABLE loadings (\
+    L_id INT PRIMARY KEY,\
+    L_date DATE NOT NULL,\
+    SH_id INT NOT NULL REFERENCES ships(SH_id),\
+    PL_id INT NOT NULL REFERENCES places(PL_id),\
+    C_id INT NOT NULL REFERENCES cargo(C_id),\
+    L_cnum INT NOT NULL CHECK (L_cnum > 0)\
+);\
+\
+\
+\
+INSERT INTO ships (SH_id, SH_name, SH_port, SH_discount) VALUES\
+	(1, '\uc0\u1053 \u1072 \u1093 \u1080 \u1084 \u1086 \u1074 ', '\u1057 \u1077 \u1074 \u1072 \u1089 \u1090 \u1086 \u1087 \u1086 \u1083 \u1100 ', 13),\
+	(2, '\uc0\u1055 \u1077 \u1090 \u1088  \u1055 \u1077 \u1088 \u1074 \u1099 \u1081 ', '\u1057 \u1072 \u1085 \u1082 \u1090 -\u1055 \u1077 \u1090 \u1077 \u1088 \u1073 \u1091 \u1088 \u1075 ', 10),\
+	(3, '\uc0\u1053 \u1072 \u1093 \u1080 \u1084 \u1086 \u1074 ', '\u1042 \u1083 \u1072 \u1076 \u1080 \u1074 \u1086 \u1089 \u1090 \u1086 \u1082 ', 5),\
+	(4, '\uc0\u1057 \u1091 \u1084 \u1072 \u1090 \u1088 \u1072 ', '\u1058 \u1086 \u1082 \u1080 \u1086 ', 2),\
+	(5, '\uc0\u1041 \u1072 \u1083 \u1090 \u1080 \u1082 \u1072 ', '\u1056 \u1080 \u1075 \u1072 ', 0),\
+	(6, '\uc0\u1060 \u1091 \u1082 \u1091 \u1089 \u1080 \u1084 \u1072 ', '\u1058 \u1086 \u1082 \u1080 \u1086 ', 5);\
+\
+INSERT INTO places (PL_id, PL_port, PL_pier, PL_charges) VALUES\
+	(1, '\uc0\u1057 \u1077 \u1074 \u1072 \u1089 \u1090 \u1086 \u1087 \u1086 \u1083 \u1100 ', 1, 2),\
+	(2, '\uc0\u1057 \u1077 \u1074 \u1072 \u1089 \u1090 \u1086 \u1087 \u1086 \u1083 \u1100 ', 2, 4),\
+	(3, '\uc0\u1057 \u1072 \u1085 \u1082 \u1090 -\u1055 \u1077 \u1090 \u1077 \u1088 \u1073 \u1091 \u1088 \u1075 ', 1, 3),\
+	(4, '\uc0\u1042 \u1083 \u1072 \u1076 \u1080 \u1074 \u1086 \u1089 \u1090 \u1086 \u1082 ', 1, 2),\
+	(5, '\uc0\u1042 \u1083 \u1072 \u1076 \u1080 \u1074 \u1086 \u1089 \u1090 \u1086 \u1082 ', 2, 5);\
+\
+INSERT INTO cargo (C_id, C_name, C_port, C_price, C_maxnum) VALUES\
+	(11, '\uc0\u1052 \u1072 \u1096 \u1080 \u1085 \u1099 ', '\u1042 \u1083 \u1072 \u1076 \u1080 \u1074 \u1086 \u1089 \u1090 \u1086 \u1082 ', 1500000, 10),\
+	(12, '\uc0\u1048 \u1082 \u1088 \u1072 ', '\u1042 \u1083 \u1072 \u1076 \u1080 \u1074 \u1086 \u1089 \u1090 \u1086 \u1082 ', 4600, 101),\
+	(13, '\uc0\u1055 \u1077 \u1088 \u1089 \u1080 \u1082 \u1080 ', '\u1057 \u1077 \u1074 \u1072 \u1089 \u1090 \u1086 \u1087 \u1086 \u1083 \u1100 ', 150, 77),\
+	(14, '\uc0\u1040 \u1088 \u1073 \u1091 \u1079 \u1099 ', '\u1057 \u1077 \u1074 \u1072 \u1089 \u1090 \u1086 \u1087 \u1086 \u1083 \u1100 ', 88, 123),\
+	(15, '\uc0\u1055 \u1083 \u1072 \u1090 \u1099 ', '\u1057 \u1072 \u1085 \u1082 \u1090 -\u1055 \u1077 \u1090 \u1077 \u1088 \u1073 \u1091 \u1088 \u1075 ', 78000, 88),\
+	(16, '\uc0\u1064 \u1087 \u1088 \u1086 \u1090 \u1099 ', '\u1056 \u1080 \u1075 \u1072 ', 99, 111);\
+\
+INSERT INTO loadings (L_id, L_date, SH_id, PL_id, C_id, L_cnum) VALUES\
+	(1, '2024-12-25', 1, 1, 14, 77),\
+	(2, '2025-03-15', 1, 2, 13, 50),\
+	(3, '2025-05-07', 3, 2, 14, 100),\
+	(4, '2025-06-28', 6, 4, 12, 100),\
+	(5, '2025-07-09', 5, 3, 13, 60),\
+	(6, '2025-07-15', 6, 4, 12, 99),\
+	(7, '2025-09-21', 2, 3, 15, 88),\
+	(8, '2025-12-18', 4, 5, 11, 7),\
+	(9, '2025-12-19', 3, 2, 14, 100),\
+	(10, '2025-12-25', 6, 1, 13, 70);\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+-- 1\
+SELECT \
+    s.SH_name,\
+    p.PL_port,\
+    p.PL_charges,\
+    l.L_date\
+FROM loadings l\
+JOIN ships s USING(SH_id)\
+JOIN places P USING(PL_id)\
+WHERE p.PL_port != s.SH_port\
+  AND p.PL_charges > 3\
+ORDER BY l.L_date;\
+\
+\
+\
+-- 2\
+SELECT \
+    p.PL_port,\
+    p.PL_pier\
+FROM places p\
+WHERE p.PL_id NOT IN (\
+    SELECT DISTINCT l.PL_id\
+    FROM loadings l\
+    JOIN ships s USING(SH_id)\
+    WHERE s.SH_port = '\uc0\u1058 \u1086 \u1082 \u1080 \u1086 '\
+);\
+\
+\
+\
+-- 3\
+SELECT DISTINCT \
+    s.SH_id,\
+    s.SH_name\
+FROM ships s\
+JOIN loadings l USING(SH_id)\
+JOIN places p ON l.PL_id = p.PL_id\
+WHERE p.PL_port IN ('\uc0\u1057 \u1077 \u1074 \u1072 \u1089 \u1090 \u1086 \u1087 \u1086 \u1083 \u1100 ', '\u1042 \u1083 \u1072 \u1076 \u1080 \u1074 \u1086 \u1089 \u1090 \u1086 \u1082 ')\
+AND s.SH_discount < (SELECT AVG(SH_discount) FROM ships);\
+\
+\
+\
+-- 4\
+SELECT \
+    c.C_name,\
+    SUM(l.L_cnum)\
+FROM cargo c\
+JOIN loadings l USING(C_id)\
+GROUP BY c.C_id\
+ORDER BY SUM(l.L_cnum) DESC;\
+\
+\
+\
+-- 5\
+SELECT \
+    s.SH_name,\
+    s.SH_port,\
+    ROUND(\
+        l.L_cnum * c.C_price * \
+        (1 - s.SH_discount / 100) * \
+        (1 + p.PL_charges / 100), \
+        2\
+    ) as full_price\
+FROM loadings l\
+JOIN ships s USING(SH_id)\
+JOIN places p USING(PL_id)\
+JOIN cargo c USING(C_id)\
+WHERE l.L_date BETWEEN '2025-06-11' AND '2025-09-21'\
+ORDER BY (\
+    l.L_cnum * c.C_price * \
+    (1 - s.SH_discount / 100) * \
+    (1 + p.PL_charges / 100)\
+) DESC\
+LIMIT 1;}
