@@ -1,3 +1,1 @@
-# Databases
-> Made by Andrew Veretennikov (anveretal)
-
+# Databases: Queries and Modeling
